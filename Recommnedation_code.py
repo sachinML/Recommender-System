@@ -68,4 +68,3 @@ user_recs = user_recs.join(movies, 'movieId')
 
 print('Top 10 recommended movies for the user:')
 user_recs.select('title').show(truncate=False)
-
