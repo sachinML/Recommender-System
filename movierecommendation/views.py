@@ -11,7 +11,7 @@ from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 from movierecommendation.config import cache
 
 
-DATA_FOLDER = "../ml-latest-small"
+DATA_FOLDER = "ml-latest-small"
 
 
 @require_GET
