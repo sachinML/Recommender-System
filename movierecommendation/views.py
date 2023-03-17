@@ -10,6 +10,10 @@ from pyspark.sql.functions import col
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 from movierecommendation.config import cache
 
+
+DATA_FOLDER = "../ml-latest-small"
+
+
 @require_GET
 def recommend_movies(request, user_id='1'):
     # Create a SparkSession
@@ -23,8 +27,8 @@ def recommend_movies(request, user_id='1'):
     .getOrCreate()
 
     # Loading the dataset
-    ratings = spark.read.format('csv').options(header='true', inferSchema='true').load('D:\\Task\\ml-latest-small\\ratings.csv').cache()
-    movies = spark.read.format('csv').options(header='true', inferSchema='true').load('D:\\Task\\ml-latest-small\\movies.csv').cache()
+    ratings = spark.read.format('csv').options(header='true', inferSchema='true').load(f'{DATA_FOLDER}/ratings.csv').cache()
+    movies = spark.read.format('csv').options(header='true', inferSchema='true').load(f'{DATA_FOLDER}/movies.csv').cache()
 
     # Load the saved model
     saved_model = ALSModel.load('C:\\Users\\Sachin\\Downloads\\ALS_model\\content\\ALS_model')
@@ -59,12 +63,10 @@ def recommend_movies_with_training(request, user_id='1'):
     spark = SparkSession.builder.appName('MovieRecommendation').getOrCreate()
 
     # Loading the dataset
-    ratings = spark.read.format('csv').options(header='true', inferSchema='true').load('D:\\Task\\ml-latest-small\\ratings.csv').cache()
-    movies = spark.read.format('csv').options(header='true', inferSchema='true').load('D:\\Task\\ml-latest-small\\movies.csv').cache()
+    ratings = spark.read.format('csv').options(header='true', inferSchema='true').load(f'{DATA_FOLDER}/ratings.csv').cache()
+    movies = spark.read.format('csv').options(header='true', inferSchema='true').load(f'{DATA_FOLDER}/movies.csv').cache()
 
     if not cache:
-        # Load the saved model
-        # saved_model = ALSModel.load('C:\\Users\\Sachin\\Downloads\\ALS_model\\content\\ALS_model')
         (training, validation, test) = ratings.randomSplit([0.6, 0.2, 0.2], seed=42)
         als = ALS(userCol='userId', itemCol='movieId', ratingCol='rating', nonnegative=True, coldStartStrategy='drop')
         param_grid = ParamGridBuilder() \
