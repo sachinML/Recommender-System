@@ -25,7 +25,7 @@ def recommend_movies(request, user_id='1'):
 
     if not cache:
         # Load the saved model
-        saved_model = ALSModel.load('D:\\savedALS_model')
+        saved_model = ALSModel.load("savedALS_model")
         cache["model"] = saved_model
     else:
         saved_model = cache["model"]
