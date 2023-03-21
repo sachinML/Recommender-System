@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from movierecommendation.views import recommend_movies, recommend_movies_with_training
+from movierecommendation.views import recommend_movies #, recommend_movies_with_training
 
 urlpatterns = [
-    path('', recommend_movies_with_training),
-    path('recommend_movies/<int:user_id>/', recommend_movies_with_training),
+    path('', recommend_movies),
+    path('recommend_movies/<int:user_id>/', recommend_movies),
 ]
-
