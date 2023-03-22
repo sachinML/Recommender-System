@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 from movierecommendation.views import recommend_movies
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('', recommend_movies),
-    path('recommendations/<int:user_id>/', recommend_movies),
+     path('recommend/<int:user_id>/', recommend_movies.as_view(), name='recommend'),
+     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
